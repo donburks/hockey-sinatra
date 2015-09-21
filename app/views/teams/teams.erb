@@ -1,0 +1,7 @@
+<% @teams.each do |team| %>
+	<div>
+		<h4><%= team.city %> <%= team.name %></h4>
+		<p><strong>Mascot: </strong> <%= team.mascot %></p>
+		<a href="/teams/<%= team.slug %>">See team info (<%= team.players.count %> players)</a>
+	</div>
+<% end %>
