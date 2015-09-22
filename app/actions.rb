@@ -1,5 +1,13 @@
 # Homepage (Root path)
 get '/' do
+	if session[:counter]
+		session[:counter] += 1
+	else
+		session[:counter] = 0
+	end
+	if session[:user_id]
+		@user = User.find(session[:user_id])
+	end
   erb :index
 end
 
@@ -27,4 +35,22 @@ post '/players/create' do
 	else
 		redirect '/teams'
 	end
+end
+
+post '/login' do
+	email = params[:email]
+	password = params[:password]
+
+	user = User.find_by(email: email, password: password)
+
+	if user
+		session[:user_id] = user.id
+	end
+
+	redirect '/'
+end
+
+get '/logout' do
+	session.clear
+	redirect '/'
 end
