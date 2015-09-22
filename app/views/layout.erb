@@ -15,9 +15,21 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src="/javascript/application.js"></script>
 
-  <title></title>
+  <title>Hockey App</title>
 </head>
 <body>
-  <%= yield %>
+	<nav>
+		<h2>Hockey App</h2>
+		<div id="user">
+			<% if @user %>
+				<p><%= @user.name %> | <a href="/logout">Log Out</a></p>
+			<% else %>
+				<p><a href="/login">Log In</a></p>
+			<% end %>
+		</div>
+	</nav>
+	<div id="main">
+		<%= yield %>
+	</div>
 </body>
 </html>
