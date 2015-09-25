@@ -56,13 +56,35 @@ get '/login' do
 	erb :login
 end
 
+get '/signup' do
+	erb :signup
+end
+
+post '/signup' do
+	name = params[:name]
+	email = params[:email]
+	password = BCrypt::Password.create(params[:password])
+
+	user = User.create name: name, email: email, password_hash: password
+
+	if user
+		session[:user_id] = user.id
+		redirect '/'
+	else
+		session[:error] = "You suck at creating users"
+		redirect '/signup'
+	end
+end
+
 post '/login' do
 	email = params[:email]
 	password = params[:password]
 
-	user = User.find_by(email: email, password: password)
+	user = User.find_by(email: email)
 
-	if user
+	password_hash = BCrypt::Password.new(user.password_hash) if user
+	
+	if user && password_hash == password
 		session[:user_id] = user.id
 	else 
 		session[:error] = "Invalid credentials"
@@ -74,4 +96,9 @@ end
 get '/logout' do
 	session.clear
 	redirect '/'
+end
+
+get '/teams.json' do
+	@teams = Team.all
+	@teams.to_json
 end
