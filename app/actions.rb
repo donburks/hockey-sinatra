@@ -37,8 +37,13 @@ get '/teams/:slug' do
 end
 
 get '/teams/:slug/players/new' do
-	@team = Team.find_by(slug: params[:slug])
-	erb :'players/new_player'
+	if @user.admin
+		@team = Team.find_by(slug: params[:slug])
+		erb :'players/new_player'
+	else
+		session[:error] = "You are not allowed to that."
+		redirect "/teams/#{params[:slug]}"
+	end
 end
 
 post '/players/create' do
@@ -101,4 +106,15 @@ end
 get '/teams.json' do
 	@teams = Team.all
 	@teams.to_json
+end
+
+get '/users/:id' do
+	@the_user = User.find(params[:id])
+
+	if @user.id == @the_user.id || @user.admin
+		erb :user
+	else
+		session[:error] = "You can't do that!"
+		redirect '/teams'
+	end
 end

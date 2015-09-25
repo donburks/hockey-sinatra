@@ -12,7 +12,7 @@
   -->
   <link rel="stylesheet" href="/stylesheets/application.css">
 
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="/javascript/application.js"></script>
 
   <title>Hockey App</title>
@@ -29,6 +29,9 @@
 		</div>
 	</nav>
 	<div id="main">
+		<% if @error %>
+			<div class="error"><%= @error %></div>
+		<% end %>
 		<%= yield %>
 	</div>
 </body>
