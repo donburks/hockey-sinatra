@@ -1,1 +1,14 @@
 <h1>Home Page</h1>
+
+<h2><%= session[:counter] %></h2>
+
+<% if @user %>
+	<h2>Hi <%= @user.name %></h2>
+	<a href="/logout">Log out</a>
+<% else %>
+	<%= erb :login %>
+<% end %>
+
+<a href="/teams">View the teams</a><br>
+<h4>For AJAX-y fun, please click:</h4>
+<button id="load_teams">Load Teams</button>

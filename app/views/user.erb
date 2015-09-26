@@ -1,0 +1,5 @@
+<h1><%= @the_user.name %></h1>
+<h2><%= @the_user.email %></h2>
+<% if @user.id == @the_user.id %>
+	<h3><%= @the_user.password_hash %></h3>
+<% end %>
